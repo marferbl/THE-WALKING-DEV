@@ -1,5 +1,5 @@
 class Sky {
-  constructor(ctx, posX, posY, width, height,  imageName) {
+  constructor(ctx, posX, posY, width, height,  imageName,speed) {
     this.ctx = ctx
 
     this.pos = {
@@ -12,7 +12,7 @@ class Sky {
       height: height
     }
 
-   
+   this.speed=speed,
 
     this.imageInstance = undefined
     this.imageName = imageName
@@ -27,7 +27,16 @@ class Sky {
 
   draw() {
     this.ctx.drawImage(this.imageInstance, this.pos.x, this.pos.y, this.size.width, this.size.height)
+    this.ctx.drawImage(this.imageInstance, this.pos.x , this.pos.y+this.size.height, this.size.width, this.size.height)
     
+  }
+
+   move() {
+    if (this.pos.y  <-this.size.height) {
+      this.pos.y = 0;
+    }
+    
+    this.pos.y -= this.speed;
   }
 
 }

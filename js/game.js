@@ -13,6 +13,9 @@ const game = {
   road: undefined,
   lines: [],
   zombie: undefined,
+  vaccines: [],
+  doctors: [],
+  normies: [],
   framesCounter: 0,
   sky: undefined,
   keys: {
@@ -29,11 +32,10 @@ const game = {
 
     this.setContext()
     this.setDimensions()
-    this.createRoad()
     this.createSky();
+    this.createRoad()
     this.createAll()
     this.setListeners()
-    this.drawAll()
 
 
     this.createLine()
@@ -65,31 +67,72 @@ const game = {
   start() {
     this.intervalId = setInterval(() => {
       this.framesCounter++;
+
+
+      console.log(this.randomNumber())
+      if (this.framesCounter % 8 == 0) this.createLine()
+      // NORMIES CREATE
+
+      if (this.framesCounter % (80 + this.randomNumber()) == 0) this.createNormies("left")
+      if (this.framesCounter % (80 + this.randomNumber()) == 0) this.createNormies("right")
+      if (this.framesCounter % (70 + this.randomNumber()) == 0) this.createNormies("center")
+      // DOCTORS CREATE
+      if (this.framesCounter % (120 + this.randomNumber()) == 0) this.createDoctors("left")
+      if (this.framesCounter % (100 + this.randomNumber()) == 0) this.createDoctors("right")
+      if (this.framesCounter % (90 + this.randomNumber()) == 0) this.createDoctors("center")
+      // VACCINES CREATE
+      if (this.framesCounter % (180 + this.randomNumber()) == 0) this.createVaccines("left")
+      if (this.framesCounter % (160 + this.randomNumber()) == 0) this.createVaccines("right")
+      if (this.framesCounter % (120 + this.randomNumber()) == 0) this.createVaccines("center")
+      //
+      this.clearScreen()
       this.drawAll();
-      if (this.framesCounter % 3 == 0) this.createLine()
-      
-      // console.log(this.lines)
+      console.log(this.normies)
       this.moveAll();
       this.increaseAll();
+      this.clearObstacles();
 
-    }, 50)
-
-
+    }, 80)
   },
 
+  // CALCULAR RANDOM 
+
+  randomNumber() {
+    let randomNumber = Math.floor(Math.random() * (20 - 0 + 1) + 0)
+    return randomNumber
+  },
+
+  // random6080() {
+  //   let random6080 = Math.floor(Math.random() * (80 - 60 + 1) + 60)
+  //   return random6080
+  // },
+
+  // random90120() {
+  //   let random90120 = Math.floor(Math.random() * (120 - 90 + 1) + 90)
+  //   return random90120
+  // },
+
+  // random110180() {
+  //   let random110180 = Math.floor(Math.random() * (180 - 110 + 1) + 110)
+  //   return random110180
+  // },
 
   //DRAWS
   drawAll() {
-    this.drawBackground()
+    this.drawSky()
+    this.drawGreen()
     this.drawLines()
     this.drawRoad()
-    this.drawSky();
+    this.drawNormies();
+    this.drawVaccines();
+    this.drawDoctors();
     this.drawZombie();
+
   },
 
-  drawBackground() {
+  drawGreen() {
     this.ctx.fillStyle = "#8FC04C"
-    this.ctx.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height)
+    this.ctx.fillRect(0, 213, this.canvasSize.width, this.canvasSize.height)
 
   },
 
@@ -103,6 +146,21 @@ const game = {
     this.zombie.draw();
   },
 
+  drawNormies() {
+    this.normies.forEach(normie => normie.draw())
+
+  },
+
+  drawVaccines() {
+    this.vaccines.forEach(vaccine => vaccine.draw())
+
+  },
+
+  drawDoctors() {
+    this.doctors.forEach(doctor => doctor.draw())
+
+  },
+
 
   drawRoad() {
     this.road.draw();
@@ -114,7 +172,48 @@ const game = {
 
   //CREATES
   createAll() {
+    this.createNormies()
+    this.createDoctors()
+    this.createVaccines()
     this.createZombie()
+  },
+
+  createNormies(param) {
+    if (param == "left") {
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, -15, "man.png"))
+    } else if (param == "right") {
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, 15, "man.png"))
+    } else if (param == "center") {
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, 0, "man.png"))
+    } else {
+      null
+    }
+
+  },
+
+  createVaccines(param) {
+    if (param == "left") {
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, -15, "vaccine.png"))
+    } else if (param == "right") {
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, 15, "vaccine.png"))
+    } else if (param == "center") {
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, 0, "vaccine.png"))
+    } else {
+      null
+    }
+
+  },
+
+  createDoctors(param) {
+    if (param == "left") {
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, -15, "hazmat.png"))
+    } else if (param == "right") {
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, 15, "hazmat.png"))
+    } else if (param == "center") {
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 20, 35, 0, "hazmat.png"))
+    } else {
+      null
+    }
 
   },
 
@@ -123,7 +222,7 @@ const game = {
   },
 
   createLine() {
-    this.lines.push(new Line(this.ctx, 0, 200, this.canvasSize.width, 200, 0, 15, 15))
+    this.lines.push(new Line(this.ctx, 0, 240, this.canvasSize.width, 240, 0, 20, 5))
   },
 
 
@@ -133,31 +232,103 @@ const game = {
   },
 
   createSky() {
-    this.sky = new Sky(this.ctx, 0, 0, this.canvasSize.width, 212, "sky.jpg")
+    this.sky = new Sky(this.ctx, 0, 0, this.canvasSize.width, 700, "sky-game.png", 1)
   },
 
   //MOVES
   moveAll() {
     this.moveLines()
+    this.moveSky()
     this.moveZombie()
+    this.moveNormies()
+    this.moveVaccines()
+    this.moveDoctors()
   },
 
   moveZombie() {
     this.zombie.move()
   },
 
+  moveNormies() {
+    this.normies.forEach(normie => normie.move())
+
+  },
+
+  moveVaccines() {
+    this.vaccines.forEach(vaccine => vaccine.move())
+
+  },
+
+  moveDoctors() {
+    this.doctors.forEach(doctor => doctor.move())
+
+  },
+
+
   moveLines() {
     this.lines.forEach(line => line.move())
   },
 
+  moveSky() {
+    this.sky.move();
+
+  },
+
+
+  // CLEAR 
+
+  clearScreen() {
+    this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height)
+  },
+
+  clearObstacles() {
+    this.clearNormies()
+    this.clearVaccines()
+    this.clearDoctors()
+  },
+
+
+  clearNormies() {
+    this.normies = this.normies.filter(normie => {
+      if (normie.pos.y < this.canvasSize.height - 230) {
+        return true
+      }
+    })
+  },
+
+  clearVaccines() {
+    this.vaccines = this.vaccines.filter(vaccine => {
+      if (vaccine.pos.y < this.canvasSize.height - 230) {
+        return true
+      }
+    })
+  },
+
+  clearDoctors() {
+    this.doctors = this.doctors.filter(doctor => {
+      if (doctor.pos.y < this.canvasSize.height - 230) {
+        return true
+      }
+    })
+  },
+
+  // increase
   increaseAll() {
     this.increaseLines();
-
+    this.increaseObstacles()
   },
 
   increaseLines() {
     this.lines.forEach(line => line.increaseLineWidth())
   },
+
+  increaseObstacles() {
+    this.normies.forEach(normie => normie.increaseSize())
+    this.vaccines.forEach(vaccine => vaccine.increaseSize())
+    this.doctors.forEach(doctor => doctor.increaseSize())
+  },
+
+
 
   // LISTENERS
 

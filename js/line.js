@@ -49,7 +49,7 @@ class Line {
 
 
   increaseLineWidth(){
-        this.lineWidth += 1;
+        this.lineWidth += 5;
 
   }
 
