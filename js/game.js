@@ -11,14 +11,16 @@ const game = {
   canvasSize: { width: undefined, height: undefined },
   background: undefined,
   road:undefined,
+   zombie: undefined,
   lines: [],
   framesCounter: 0,
   sky:undefined,
-  keys: {
-    player: {
-      ARROW_LEFT: " ArrowLeft",
-      ARROW_RIGHT: "ArrowRight"
-    }
+ keys: {
+    
+       zombie: {
+      ARROW_LEFT: "ArrowLeft",
+      ARROW_RIGHT: "ArrowRight" }
+    
   },
 
 
@@ -27,12 +29,13 @@ const game = {
        console.log("Init")
 
     this.setContext()
-       
+    
     this.setDimensions()
- this.createRoad()
- this.createSky();
-    this.createAll()
-    this.drawAll()
+      this.createSky(); 
+      this.createRoad()
+       this.createAll()
+   
+      this.setListeners( )
     
     
     this.createLine()
@@ -66,9 +69,9 @@ const game = {
           this.framesCounter ++;
           this.drawAll();
           
-          if(this.framesCounter % 3 == 0)     this.createLine()
+          if(this.framesCounter % 8 == 0)     this.createLine()
           
-          console.log(this.lines)
+          
           this.moveAll();
           this.increaseAll();
 
@@ -80,15 +83,17 @@ const game = {
 
 //DRAWS
 drawAll(){
-this.drawBackground()
+  this.drawSky();
+this.drawGreen()
 this.drawLines()
 this.drawRoad()
-this.drawSky();
+   this.drawZombie();
+
 },
 
-drawBackground(){
+drawGreen(){
   this.ctx.fillStyle = "#8FC04C"
-  this.ctx.fillRect(0, 0,this.canvasSize.width, this.canvasSize.height)
+  this.ctx.fillRect(0, 213,this.canvasSize.width, this.canvasSize.height)
 
 },
 
@@ -98,7 +103,9 @@ this.lines.forEach(line=> line.draw() )
 
 },
 
-
+drawZombie() {
+this.zombie.draw();
+  },
 drawRoad(){
 this.road.draw();
 
@@ -109,7 +116,7 @@ this.sky.draw();
 
 //CREATES
 createAll(){
-
+this.createZombie();
 
 
 
@@ -118,10 +125,13 @@ createAll(){
 
 
 createLine(){
-this.lines.push(new Line(this.ctx,0,200 , this.canvasSize.width,200 , 0, 15,15))
+this.lines.push(new Line(this.ctx,0,200 , this.canvasSize.width,200 , 0, 20,5))
 
 
 },
+createZombie() {
+    this.zombie = new Zombie(this.canvasSize.width, this.ctx, this.canvasSize.width / 2 - 100, this.canvasSize.height - 350, 200, 350, "zombie.png")
+  },
 
 
 createRoad(){
@@ -130,16 +140,26 @@ this.road = new Road(this.ctx,0,210, this.canvasSize.width,750,"carreteraChunga.
 },
 
 createSky(){
-  this.sky= new Sky(this.ctx,0,0,this.canvasSize.width, 212,"sky.jpg")
+  this.sky= new Sky(this.ctx,0,0,this.canvasSize.width, 700,"sky-game.png",1)
 },
 
 //MOVES
 moveAll(){
 this.moveLines()
+this.moveSky();
+ this.moveZombie()
+
 },
 
 moveLines(){
   this.lines.forEach(line=> line.move())
+},
+ moveZombie() {
+    this.zombie.move()
+  },
+moveSky(){
+  this.sky.move();
+  
 },
 
 increaseAll(){
@@ -151,7 +171,22 @@ this.increaseLines();
 
 increaseLines(){
   this.lines.forEach(line=> line.increaseLineWidth())
-}
+},
+
+//LISTENERS
+
+setListeners() {
+    document.onkeydown = (e) => {
+      if (e.key === this.keys.zombie.ARROW_LEFT) {
+        this.zombie.moveLeft(this.canvasSize.width)
+        console.log("move left")
+      }
+      if (e.key === this.keys.zombie.ARROW_RIGHT) {
+        this.zombie.moveRight(this.canvasSize.width)
+        console.log("move right")
+      }
+    }
+  },
 
 
 
@@ -173,4 +208,4 @@ increaseLines(){
 
 
 
-  
+
