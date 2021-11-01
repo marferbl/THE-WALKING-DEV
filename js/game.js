@@ -10,8 +10,10 @@ const game = {
   ctx: undefined,
   canvasSize: { width: undefined, height: undefined },
   background: undefined,
+  road:undefined,
   lines: [],
   framesCounter: 0,
+  sky:undefined,
   keys: {
     player: {
       ARROW_LEFT: " ArrowLeft",
@@ -25,13 +27,16 @@ const game = {
        console.log("Init")
 
     this.setContext()
-     
+       
     this.setDimensions()
+ this.createRoad()
+ this.createSky();
+    this.createAll()
     this.drawAll()
     
-    this.createAll()
-    this.createLine()
     
+    this.createLine()
+ 
     this.start()
 
 
@@ -61,7 +66,7 @@ const game = {
           this.framesCounter ++;
           this.drawAll();
           
-          if(this.framesCounter % 20 == 0) this.createLine()
+          if(this.framesCounter % 3 == 0)     this.createLine()
           
           console.log(this.lines)
           this.moveAll();
@@ -77,11 +82,12 @@ const game = {
 drawAll(){
 this.drawBackground()
 this.drawLines()
-
+this.drawRoad()
+this.drawSky();
 },
 
 drawBackground(){
-  this.ctx.fillStyle = "black"
+  this.ctx.fillStyle = "#8FC04C"
   this.ctx.fillRect(0, 0,this.canvasSize.width, this.canvasSize.height)
 
 },
@@ -90,6 +96,15 @@ drawLines(){
   
 this.lines.forEach(line=> line.draw() )
 
+},
+
+
+drawRoad(){
+this.road.draw();
+
+},
+drawSky(){
+this.sky.draw();
 },
 
 //CREATES
@@ -103,9 +118,19 @@ createAll(){
 
 
 createLine(){
-this.lines.push(new Line(this.ctx,0,200 , this.canvasSize.width,200 , 0, 20,5))
+this.lines.push(new Line(this.ctx,0,200 , this.canvasSize.width,200 , 0, 15,15))
 
 
+},
+
+
+createRoad(){
+this.road = new Road(this.ctx,0,210, this.canvasSize.width,750,"carreteraChunga.png")
+
+},
+
+createSky(){
+  this.sky= new Sky(this.ctx,0,0,this.canvasSize.width, 212,"sky.jpg")
 },
 
 //MOVES
@@ -141,3 +166,11 @@ increaseLines(){
 
 
 }
+
+
+
+
+
+
+
+  

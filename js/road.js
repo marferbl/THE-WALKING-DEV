@@ -1,4 +1,4 @@
-class Sky {
+class Road {
   constructor(ctx, posX, posY, width, height,  imageName) {
     this.ctx = ctx
 

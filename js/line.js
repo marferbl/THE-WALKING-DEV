@@ -23,7 +23,7 @@ class Line {
  
 
   draw() {
-        this.ctx.strokeStyle = 'white'
+        this.ctx.strokeStyle = '#73B043'
         this.ctx.lineWidth = this.lineWidth;
         this.ctx.beginPath()
         
@@ -49,7 +49,7 @@ class Line {
 
 
   increaseLineWidth(){
-        this.lineWidth++;
+        this.lineWidth += 1;
 
   }
 
