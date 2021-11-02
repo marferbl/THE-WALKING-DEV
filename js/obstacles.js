@@ -1,6 +1,5 @@
-class Zombie {
-    constructor(canvasSizeWidth, ctx, posX, posY, width, height, imageName) {
-        this.canvasSizeWidth = canvasSizeWidth
+class Obstacles {
+    constructor(ctx, posX, posY, width, height, posXDesviation, imageName) {
         this.ctx = ctx
 
         this.pos = {
@@ -13,6 +12,8 @@ class Zombie {
             width: width,
             height: height
         }
+
+        this.posXDesviation = posXDesviation
 
         this.imageInstance = undefined
         this.imageName = imageName
@@ -31,17 +32,12 @@ class Zombie {
     }
 
     move() {
-        this.moveLeft()
-        this.moveRight()
+        this.pos.x += this.posXDesviation
+        this.pos.y += this.size.height*.03
     }
 
-    moveLeft() {
-        // console.log("Im moving left", this.pos.x)
-        this.pos.x > 0 ? this.pos.x -= 50 : null
+    increaseSize() {
+        this.size.width += 2
+        this.size.height += 4
     }
-
-    moveRight() {
-        // console.log("Im moving right", this.pos.x)
-        this.pos.x < this.canvasSizeWidth - this.size.width ? this.pos.x += 50 : null
-    }
-} 
+}
