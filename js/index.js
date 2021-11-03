@@ -1,5 +1,9 @@
 window.onload = () => {
-  game.init()
-  console.log("Empezando")
- 
-}
+  document.querySelector(".start-button").onclick = () => {
+    document.querySelector(".bodyDiv").style.display = "none";
+    startGame();
+  };
+  function startGame() {
+    game.init();
+  }
+};

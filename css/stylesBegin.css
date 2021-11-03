@@ -1,20 +1,5 @@
 body {
-  background-image: url(../images/bg.jpg);
-}
-
-.bodyDiv {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vh;
-  background-image: url(../images/bg.jpg);
-}
-
-.startScreen {
   height: 98vh;
-  width: 100;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -22,22 +7,18 @@ body {
   background-image: url(../images/bakground-dark.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 20%;
-  padding: 0 100px;
 }
 @font-face {
   font-family: "Conflict";
   src: url("./ConflictDripsPersonalUseBold-WyKXn.ttf");
 }
-.startScreen h1 {
+h1 {
   font-family: "Conflict";
   font-size: 6rem;
   text-align: center;
   color: red;
-  text-align: center;
 }
+
 a {
   text-decoration: none;
   padding: 20px 30px;
@@ -68,12 +49,4 @@ a:hover:before {
   height: 100%;
   width: 100%;
   z-index: -1;
-}
-
-canvas {
-  width: 65%;
-  height: 80%;
-  position: absolute;
-  top: 10%;
-  left: 17%;
 }

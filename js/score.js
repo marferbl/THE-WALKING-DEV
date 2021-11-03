@@ -5,13 +5,13 @@ class Score {
       x: posX,
       y: posY
     }
-    
+
     this.normiesCounter = normiesCounter;
   }
-  draw() {
+draw() {
     this.ctx.font = '58px helvetica';
-    this.ctx.fillText("Score: "+ this.normiesCounter, this.pos.x, this.pos.y);
-    
+    this.ctx.fillText("Score: " + this.normiesCounter, this.pos.x, this.pos.y);
+
   }
-  
+
 }

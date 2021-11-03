@@ -12,7 +12,6 @@ class Line {
     this.speed = speed
 
     this.image = undefined
-
     this.lineWidth= lineWidth
 
  //   this.init()
@@ -23,15 +22,15 @@ class Line {
  
 
   draw() {
-        this.ctx.strokeStyle = '#604020'
+        this.ctx.strokeStyle = '#4d2800'
         this.ctx.lineWidth = this.lineWidth;
-        this.ctx.beginPath()
         
+        this.ctx.beginPath()
         this.ctx.moveTo(this.posX, this.posY)
         this.ctx.lineTo(this.width, this.height)
         this.ctx.stroke()
         this.ctx.closePath()
-        this.ctx.beginPath()
+        
       
     }
 
@@ -52,5 +51,8 @@ class Line {
         this.lineWidth +=  1.2
 
   }
+
+
+ 
 
 }
