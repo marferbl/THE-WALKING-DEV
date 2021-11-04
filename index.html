@@ -12,11 +12,22 @@
     <div class="bodyDiv">
       <div class="startScreen">
         <h1>The Walking Dev</h1>
+        <div class="instructions">
+          <img src="./images/instruction2.png" alt="" />
+        </div>
         <a href="#" class="start-button">START</a>
       </div>
     </div>
 
     <canvas id="myCanvas"> </canvas>
+
+    <div class="video-container">
+      <h2>You are DEAD</h2>
+      <video autoplay muted loop>
+        <source src="./images/videoZombie.mp4" type="video/mp4" />
+      </video>
+      <div class="source"></div>
+    </div>
 
     <script src="js/life.js"></script>
     <script src="js/score.js"></script>

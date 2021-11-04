@@ -4,12 +4,17 @@ body {
 
 .bodyDiv {
   margin: 0;
+  margin-top: 20px;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vh;
-  background-image: url(../images/bg.jpg);
+  width: 96vh;
+  background-image: url(../images/background.jpeg);
+}
+img {
+  width: 800px;
+  height: auto;
 }
 
 .startScreen {
@@ -19,12 +24,13 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-image: url(../images/bakground-dark.jpg);
+  background-image: url(../images/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   position: absolute;
   top: 0;
-  left: 20%;
+  left: 18%;
   padding: 0 100px;
 }
 @font-face {
@@ -36,6 +42,7 @@ body {
   font-size: 6rem;
   text-align: center;
   color: red;
+  margin: 40px;
   text-align: center;
 }
 a {
@@ -51,6 +58,7 @@ a {
 
   position: relative;
   z-index: 1;
+  margin: 40px;
 }
 
 a::before {
@@ -76,4 +84,77 @@ canvas {
   position: absolute;
   top: 10%;
   left: 17%;
+}
+.gameOver {
+  width: 60vw;
+  height: 65vh;
+  position: absolute;
+  top: 20%;
+  left: 19.5%;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-container h2 {
+  font-family: "Conflict";
+  font-size: 100px;
+  color: red;
+  z-index: 99;
+  top: 60%;
+  left: 28%;
+  position: absolute;
+}
+
+.video-container {
+  display: none;
+  height: 100vh;
+  width: 98vw;
+  position: relative;
+}
+
+.video-container video {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  top: 18%;
+  left: 25%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+@keyframes ripple {
+  from {
+    opacity: 1;
+  }
+  to {
+    width: 600px;
+    height: 300px;
+    border-width: 1px;
+    top: -100px;
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-2 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    width: 200px;
+    height: 100px;
+    border-width: 1px;
+    top: 100px;
+    left: 200px;
+  }
+}
+
+@keyframes drip {
+  to {
+    top: 190px;
+  }
 }

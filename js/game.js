@@ -18,8 +18,8 @@ const game = {
   doctors: [],
   normies: [],
   brains: [],
-  framesNormies: 70,
-  framesDoctors: 180,
+  framesNormies: 90,
+  framesDoctors: 100,
   framesVaccines: 150,
   framesCounter: 0,
   normieCounter: 0,
@@ -27,6 +27,7 @@ const game = {
   collisionOccured: false,
   sky: undefined,
   score: undefined,
+  frameMax: 45,
   lifes: [],
 
   keys: {
@@ -44,6 +45,7 @@ const game = {
     this.setContext();
 
     this.setDimensions();
+    creepyAction.play();
     // this.createLine()
     //this.createLineCenter()
     this.createSky();
@@ -72,6 +74,7 @@ const game = {
   start() {
     this.intervalId = setInterval(() => {
       this.framesCounter++;
+      console.log(this.framesCounter);
 
       if (this.framesCounter > 2000) {
         this.framesCounter = 0;
@@ -84,6 +87,7 @@ const game = {
       }
 
       if (this.framesCounter % 140 == 0) {
+        this.frameMax += 5;
         this.createBrains(this.arrayDesvitation[this.randomNumberDesviation()]);
       }
 
@@ -96,7 +100,7 @@ const game = {
       if (this.framesCounter % this.framesVaccines == 0)
         this.createVaccines(this.arrayDesvitation[this.randomNumberDesviation()]);
 
-      if (this.framesCounter % 80 == 0) {
+      if (this.framesCounter % 150 == 0) {
         if (this.framesNormies > 40) {
           this.framesNormies -= 10;
         } else {
@@ -123,12 +127,14 @@ const game = {
       this.clearObstacles();
 
       if (this.isCollisionNormie()) {
+        rickSound.play();
         this.normieCounter++;
         console.log("normie" + this.normieCounter);
         //this.score.normiesCounter++
       }
 
       if (this.isCollisionVaccine()) {
+        collisionAudio.play();
         this.lifeCounter--;
         this.lifes.pop();
 
@@ -137,7 +143,12 @@ const game = {
       }
 
       if (this.isCollisionDoctor()) {
-        this.normieCounter--;
+        collisionAudio.play();
+        if (this.framesCounter < 500) {
+          this.normieCounter--;
+        } else if (this.framesCounter > 500 && this.framesCounter < 800) {
+          this.normieCounter -= 3;
+        } else this.normieCounter -= 5;
       }
 
       if (this.isCollisionBrain()) {
@@ -155,7 +166,7 @@ const game = {
             chosen = 150;
             break;
           case 1:
-            chosen = 200;
+            chosen = 250;
             break;
         }
         console.log(chosen);
@@ -169,7 +180,7 @@ const game = {
       if (this.lifeCounter == 0 || this.normieCounter < 0) {
         this.gameOver();
       }
-    }, 1000 / 40); //TODO ajustar frames y velocidades acorde
+    }, 1000 / this.frameMax); //TODO ajustar frames y velocidades acorde
   },
 
   // CALCULAR RANDOM
@@ -260,15 +271,15 @@ const game = {
 
   createNormies(param) {
     if (param == "left") {
-      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 16, 28, -9, "rick_2.png"));
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 70, 70, -9, "morty3d.png"));
     } else if (param == "right") {
-      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 16, 28, 9, "rick_2.png"));
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 70, 70, 9, "morty3d.png"));
     } else if (param == "left8") {
-      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 16, 28, -4, "rick_2.png"));
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 70, 70, -4, "morty3d.png"));
     } else if (param == "right8") {
-      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 16, 28, 4, "rick_2.png"));
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 70, 70, 4, "morty3d.png"));
     } else if (param == "center") {
-      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 16, 28, 0, "rick_2.png"));
+      this.normies.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 70, 70, 0, "morty3d.png"));
     } else {
       null;
     }
@@ -276,15 +287,15 @@ const game = {
 
   createVaccines(param) {
     if (param == "left") {
-      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, -9, "vaccine_sprite1.png"));
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, -9, "vaccine_sprite.png"));
     } else if (param == "right") {
-      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, 9, "vaccine_sprite1.png"));
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, 9, "vaccine_sprite.png"));
     } else if (param == "left8") {
-      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, -4, "vaccine_sprite1.png"));
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, -4, "vaccine_sprite.png"));
     } else if (param == "right8") {
-      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, 4, "vaccine_sprite1.png"));
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, 4, "vaccine_sprite.png"));
     } else if (param == "center") {
-      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, 0, "vaccine_sprite1.png"));
+      this.vaccines.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 12, 20, 0, "vaccine_sprite.png"));
     } else {
       null;
     }
@@ -292,15 +303,15 @@ const game = {
 
   createDoctors(param) {
     if (param == "left") {
-      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 28, 45, -9, "doctor_2.png"));
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 60, 80, -9, "doctor_2.png"));
     } else if (param == "right") {
-      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 28, 45, 9, "doctor_2.png"));
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 60, 80, 9, "doctor_2.png"));
     } else if (param == "left8") {
-      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 28, 45, -4, "doctor_2.png"));
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 60, 80, -4, "doctor_2.png"));
     } else if (param == "right8") {
-      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 28, 45, 4, "doctor_2.png"));
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 60, 80, 4, "doctor_2.png"));
     } else if (param == "center") {
-      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 28, 45, 0, "doctor_2.png"));
+      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 60, 80, 0, "doctor_2.png"));
     } else {
       null;
     }
@@ -308,11 +319,11 @@ const game = {
 
   createBrains(param) {
     if (param == "left") {
-      this.brains.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 5, 6, -9, "brain_2.png"));
+      this.brains.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 5, 6, -9, "brain_23.png"));
     } else if (param == "right") {
-      this.brains.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 5, 6, 9, "brain_2.png"));
+      this.brains.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 5, 6, 9, "brain_23.png"));
     } else if (param == "left8") {
-      this.doctors.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 5, 6, -4, "doctor_2.png"));
+      this.brains.push(new Obstacles(this.ctx, this.canvasSize.width / 2 - 10, 200, 5, 6, -4, "brain_23.png"));
     }
   },
 
@@ -323,8 +334,8 @@ const game = {
       this.canvasSize.width / 2 - 100,
       this.canvasSize.height - 350,
       215,
-      300,
-      "zombie3.png"
+      350,
+      "zombieSprite.png"
     );
   },
   createLifes() {
@@ -370,6 +381,7 @@ const game = {
     this.moveNormies();
     this.moveVaccines();
     this.moveDoctors();
+    this.movePlayer();
   },
 
   moveLines() {
@@ -480,12 +492,29 @@ const game = {
   setListeners() {
     document.onkeydown = (e) => {
       if (e.key === this.keys.zombie.ARROW_LEFT) {
-        this.zombie.moveLeft(this.canvasSize.width);
+        this.keyLeft = true;
+        // this.zombie.moveLeft(this.canvasSize.width);
       }
       if (e.key === this.keys.zombie.ARROW_RIGHT) {
-        this.zombie.moveRight(this.canvasSize.width);
+        this.keyRight = true;
+        // this.zombie.moveRight(this.canvasSize.width);
       }
     };
+    document.onkeyup = (e) => {
+      if (e.key === this.keys.zombie.ARROW_LEFT) {
+        this.keyLeft = false;
+        // this.zombie.moveLeft(this.canvasSize.width);
+      }
+      if (e.key === this.keys.zombie.ARROW_RIGHT) {
+        this.keyRight = false;
+        // this.zombie.moveRight(this.canvasSize.width);
+      }
+    };
+  },
+
+  movePlayer() {
+    if (this.keyLeft) this.zombie.moveLeft(this.canvasSize.width);
+    if (this.keyRight) this.zombie.moveRight(this.canvasSize.width);
   },
 
   // createBackground(){
@@ -537,5 +566,15 @@ const game = {
 
   gameOver() {
     clearInterval(this.intervalId);
+    gameOverAudio.play();
+    creepyAction.pause();
+    document.querySelector(".video-container").style.display = "flex";
   },
 };
+
+var rickSound = new Audio("../images/mortySound.mp3");
+
+var creepyAction = new Audio("../images/Creepy-Action.mp3");
+var gameOverAudio = new Audio("../images/gameOver-sound.mp3");
+
+var collisionAudio = new Audio("../images/collision-audio.mp3");
