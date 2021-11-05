@@ -27,7 +27,7 @@ const game = {
   collisionOccured: false,
   sky: undefined,
   score: undefined,
-  frameMax: 45,
+  frameMax: 60,
   lifes: [],
 
   keys: {
@@ -74,7 +74,6 @@ const game = {
   start() {
     this.intervalId = setInterval(() => {
       this.framesCounter++;
-      console.log(this.framesCounter);
 
       if (this.framesCounter > 2000) {
         this.framesCounter = 0;
@@ -86,8 +85,9 @@ const game = {
         this.createLineCenter();
       }
 
-      if (this.framesCounter % 140 == 0) {
-        this.frameMax += 5;
+      if (this.framesCounter % 280 == 0) {
+        // console.log(this.frameMax);
+        // this.frameMax -= 2;
         this.createBrains(this.arrayDesvitation[this.randomNumberDesviation()]);
       }
 
@@ -183,12 +183,6 @@ const game = {
     }, 1000 / this.frameMax); //TODO ajustar frames y velocidades acorde
   },
 
-  // CALCULAR RANDOM
-
-  // randomNumber() {
-  //   let randomNumber = Math.floor(Math.random() * (20 - 0 + 1) + 0)
-  //   return randomNumber
-  // },
   randomNumberDesviation() {
     let randomNumber = Math.floor(Math.random() * (4 - 0 + 1) + 0);
     return randomNumber;
@@ -255,8 +249,6 @@ const game = {
   drawScore() {
     this.score.draw();
   },
-
-  //CREATES
 
   //CREATES
   createAll() {
@@ -574,7 +566,7 @@ const game = {
 
 var rickSound = new Audio("../images/mortySound.mp3");
 
-var creepyAction = new Audio("../images/Creepy-Action.mp3");
+var creepyAction = new Audio("../images/Creepy-Act.mp3");
 var gameOverAudio = new Audio("../images/gameOver-sound.mp3");
 
 var collisionAudio = new Audio("../images/collision-audio.mp3");

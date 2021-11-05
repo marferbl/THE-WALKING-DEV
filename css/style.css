@@ -124,6 +124,16 @@ canvas {
   z-index: 0;
 }
 
+.buttonAgain {
+  position: absolute;
+  top: 55%;
+  left: 56%;
+  font-size: 1.2rem;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-family: Helvetica;
+}
+
 @keyframes ripple {
   from {
     opacity: 1;
