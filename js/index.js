@@ -10,4 +10,4 @@ window.onload = () => {
   }
 };
 
-let audioIntro = new Audio("../images/horror-game.mp3");
+let audioIntro = new Audio("./images/horror-game.mp3");

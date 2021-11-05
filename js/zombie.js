@@ -25,7 +25,7 @@ class Zombie {
 
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = `../images/${this.imageName}`;
+    this.imageInstance.src = `images/${this.imageName}`;
   }
 
   //   draw() {
@@ -78,8 +78,6 @@ class Zombie {
 
   moveRight() {
     // console.log("Im moving right", this.pos.x)
-    this.pos.x < this.canvasSizeWidth - this.size.width
-      ? (this.pos.x += 50)
-      : null;
+    this.pos.x < this.canvasSizeWidth - this.size.width ? (this.pos.x += 50) : null;
   }
 }

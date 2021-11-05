@@ -20,7 +20,7 @@ class Life {
   }
   init() {
     this.imageInstance = new Image();
-    this.imageInstance.src = `../images/${this.imageName}`;
+    this.imageInstance.src = `images/${this.imageName}`;
   }
 
   draw() {

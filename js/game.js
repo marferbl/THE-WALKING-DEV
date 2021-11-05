@@ -564,9 +564,9 @@ const game = {
   },
 };
 
-var rickSound = new Audio("../images/mortySound.mp3");
+var rickSound = new Audio("images/mortySound.mp3");
 
-var creepyAction = new Audio("../images/Creepy-Act.mp3");
-var gameOverAudio = new Audio("../images/gameOver-sound.mp3");
+var creepyAction = new Audio("images/Creepy-Act.mp3");
+var gameOverAudio = new Audio("images/gameOver-sound.mp3");
 
-var collisionAudio = new Audio("../images/collision-audio.mp3");
+var collisionAudio = new Audio("images/collision-audio.mp3");
