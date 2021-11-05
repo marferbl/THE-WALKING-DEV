@@ -1,11 +1,9 @@
-THE WALKIG DEV
+THE WALKING DEV
 
-You are a dev zombie
+This is a game developed by Marcos Fernandez and Lisa Medina using canvas js, for the Ironhack Web Development bootcamp in Madrid.
+During your journey  you'll encounter evil hazmat doctors who will try to lower your normie score. 
+Make sure to avoid vaccines as they'll lower your life.
 
-Your objective is to turn the maximun number of Mortys into zombies
 
-Avoid the evil doctors in hazmat suits!
 
-Vaccines will deminish your life
 
-And make sure you eat all the brains you can ;)
